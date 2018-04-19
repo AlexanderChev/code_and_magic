@@ -32,7 +32,7 @@ function createDataWizards(count) {
 }
 
 function createWizardElement(wizard) {
-  var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
+  var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
   var element = similarWizardTemplate.cloneNode(true);
 
   element.querySelector('.setup-similar-label').textContent = wizard.name;
@@ -50,6 +50,7 @@ function renderWizards() {
   for (var i = 0; i < dataWizards.length; i++) {
     fragment.appendChild(createWizardElement(dataWizards[i]));
   }
+
   similarList.appendChild(fragment);
 }
 
@@ -57,12 +58,6 @@ function showBlockSimilar() {
   renderWizards();
   blockSimilar.classList.remove('hidden');
 }
-
-modalOpen.addEventListener('click', function (e) {
-  e.preventDefault();
-  showModal();
-  showBlockSimilar();
-});
 
 function showModal() {
   modal.classList.remove('hidden');
@@ -73,3 +68,9 @@ function hideModal() {
   modal.classList.add('hidden');
   modalClose.removeEventListener('click', hideModal);
 }
+
+modalOpen.addEventListener('click', function (e) {
+  e.preventDefault();
+  showModal();
+  showBlockSimilar();
+});
