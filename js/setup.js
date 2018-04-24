@@ -1,4 +1,5 @@
 'use strict';
+window.setup = document.querySelector('.setup');
 
 var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
@@ -6,9 +7,6 @@ var WIZARD_COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 1
 var WIZARD_EYE_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 var WIZARD_FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var COUNT_WIZARDS = 4;
-
-var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
 
 function getRandomItem(arr) {
   var index = Math.floor(Math.random() * arr.length);
@@ -52,11 +50,8 @@ function renderWizards() {
   similarList.appendChild(fragment);
 }
 
-var modal = document.querySelector('.setup');
-var modalOpen = document.querySelector('.setup-open');
-var modalClose = modal.querySelector('.setup-close');
-var blockSimilar = modal.querySelector('.setup-similar');
-var userNameInput = modal.querySelector('.setup-user-name');
+var blockSimilar = document.querySelector('.setup-similar');
+var userNameInput = document.querySelector('.setup-user-name');
 
 showBlockSimilar();
 
@@ -64,42 +59,6 @@ function showBlockSimilar() {
   renderWizards();
   blockSimilar.classList.remove('hidden');
 }
-
-function onModalEscPress(e) {
-  if (e.keyCode === ESC_KEYCODE) {
-    hideModal();
-  }
-}
-
-function onModalEnterPress(e) {
-  if (e.keyCode === ENTER_KEYCODE) {
-    hideModal();
-  }
-}
-
-function showModal() {
-  modal.classList.remove('hidden');
-  modalClose.addEventListener('click', hideModal);
-  modalClose.addEventListener('keydown', onModalEnterPress);
-  document.addEventListener('keydown', onModalEscPress);
-}
-
-function hideModal() {
-  modal.classList.add('hidden');
-  modalClose.removeEventListener('click', hideModal);
-  modalClose.removeEventListener('keydown', hideModal);
-  document.removeEventListener('keydown', onModalEscPress);
-}
-
-modalOpen.addEventListener('click', function () {
-  showModal();
-});
-
-modalOpen.addEventListener('keydown', function (e) {
-  if (e.keyCode === ENTER_KEYCODE) {
-    showModal();
-  }
-});
 
 userNameInput.addEventListener('invalid', function () {
   if (userNameInput.validity.tooShort) {
@@ -136,4 +95,51 @@ userWizard.addEventListener('click', function (e) {
   } else {
     return;
   }
+});
+
+var shopContainer = document.querySelector('.setup-artifacts-shop');
+var artifactsContainer = document.querySelector('.setup-artifacts');
+var draggedItem;
+
+shopContainer.addEventListener('dragstart', function (evt) {
+  if (evt.target.tagName.toLowerCase() === 'img') {
+    draggedItem = evt.target;
+
+    evt.dataTransfer.setData('text/plain', evt.target.alt);
+    artifactsContainer.style.outline = '2px solid red';
+  }
+});
+
+shopContainer.addEventListener('dragend', function (evt) {
+  if (evt.target.tagName.toLowerCase() === 'img') {
+    artifactsContainer.style.outline = 'none';
+  }
+});
+
+artifactsContainer.addEventListener('dragstart', function (evt) {
+  evt.preventDefault();
+});
+
+artifactsContainer.addEventListener('dragover', function (evt) {
+  evt.preventDefault();
+  return false;
+});
+
+artifactsContainer.addEventListener('drop', function (evt) {
+  evt.target.style.backgroundColor = '';
+
+  if (!evt.target.children.length) {
+    evt.target.appendChild(draggedItem.cloneNode(true));
+  }
+  evt.preventDefault();
+});
+
+artifactsContainer.addEventListener('dragenter', function (evt) {
+  evt.target.style.backgroundColor = 'yellow';
+  evt.preventDefault();
+});
+
+artifactsContainer.addEventListener('dragleave', function (evt) {
+  evt.target.style.backgroundColor = '';
+  evt.preventDefault();
 });
