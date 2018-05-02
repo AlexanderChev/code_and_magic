@@ -15,6 +15,12 @@ window.util = function () {
       if (evt.keyCode === ENTER_KEYCODE) {
         callback();
       }
+    },
+
+    getRandomItem: function (arr) {
+      var index = Math.floor(Math.random() * arr.length);
+
+      return arr[index];
     }
-  }
+  };
 }();

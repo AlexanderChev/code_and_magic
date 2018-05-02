@@ -2,7 +2,7 @@
 
 (function () {
 
-  var dialog = window.setup;
+  var dialog = document.querySelector('.setup');
   var dialogOpen = document.querySelector('.setup-open');
   var dialogClose = dialog.querySelector('.setup-close');
   var dialogHandle = dialog.querySelector('.setup-user-pic');

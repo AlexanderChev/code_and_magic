@@ -871,3 +871,17 @@ input[type=radio]:checked + .review-mark-label {
   left: 0;
   top: 0;
 }
+
+.error {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  padding: 5px;
+  font-size: 30px;
+  text-align: center;
+  color: white;
+  background-color: red;
+  transition: 1s;
+}
