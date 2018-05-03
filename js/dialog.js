@@ -15,7 +15,13 @@
     window.util.isEnterEvent(evt, showDialog);
   });
 
+  function onSuccess(response) {
+    window.wizards = response;
+    window.renderWizards(window.wizards);
+  }
+
   function showDialog() {
+    window.backend.load(onSuccess, window.util.onError);
     dialog.classList.remove('hidden');
     dialogClose.addEventListener('click', hideDialog);
     dialogClose.addEventListener('keydown', onDialogCloseEnterPress);
