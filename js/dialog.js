@@ -5,7 +5,7 @@
   var dialog = document.querySelector('.setup');
   var dialogOpen = document.querySelector('.setup-open');
   var dialogClose = dialog.querySelector('.setup-close');
-  var dialogHandle = dialog.querySelector('.setup-user-pic');
+  var dialogHandle = dialog.querySelector('.upload');
 
   dialogOpen.addEventListener('click', function () {
     showDialog();
@@ -54,8 +54,12 @@
       y: evt.clientY
     };
 
+    var dragged = false;
+
     function onMouseMove(moveEvt) {
       moveEvt.preventDefault();
+
+      dragged = true;
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
@@ -76,6 +80,15 @@
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
+
+      if (dragged) {
+        var onClickPreventDefault = function (e) {
+          e.preventDefault();
+          dragged = false;
+          dialogHandle.removeEventListener('click', onClickPreventDefault);
+        };
+        dialogHandle.addEventListener('click', onClickPreventDefault);
+      }
     }
 
     document.addEventListener('mousemove', onMouseMove);

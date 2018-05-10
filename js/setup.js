@@ -15,7 +15,7 @@
   var inputFireballColor = document.querySelector('input[name="fireball-color"]');
   var coatColor;
   var eyesColor;
-  var TIMEOUT = 500;
+  var DEBOUNCE_TIMEOUT = 500;
 
   function getRank(wizard) {
     var rank = 0;
@@ -42,29 +42,18 @@
     }));
   }
 
-  // var timer;
-
   function fillCoat(element, color) {
     element.style.fill = color;
     inputCoatColor.value = color;
     coatColor = color;
-    // clearTimeout(timer);
-    // timer = setTimeout(() => {
-    //   updateWizards();
-    // }, TIMEOUT);
-    window.util.debounce(updateWizards, TIMEOUT);
+    window.util.debounce(updateWizards, DEBOUNCE_TIMEOUT);
   }
 
   function fillEyes(element, color) {
     element.style.fill = color;
     inputEyesColor.value = color;
     eyesColor = color;
-    // clearTimeout(timer);
-    // timer = setTimeout(() => {
-    //   updateWizards();
-    // }, TIMEOUT);
-
-    window.util.debounce(updateWizards, TIMEOUT);
+    window.util.debounce(updateWizards, DEBOUNCE_TIMEOUT);
   }
 
   function changeFireballBackground(element, color) {

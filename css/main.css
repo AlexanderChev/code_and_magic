@@ -863,7 +863,7 @@ input[type=radio]:checked + .review-mark-label {
 
 .upload input {
   position: absolute;
-  z-index: 0;
+  z-index: 1;
   opacity: 0;
   width:100%;
   height:100%;
